@@ -5,7 +5,9 @@
 #include "terasic_includes.h"
 #include "mipi_camera_config.h"
 #include "mipi_bridge_config.h"
-
+#include "sys/alt_cache.h"
+#include "altera_avalon_spi.h"
+#include "altera_avalon_spi_regs.h"
 #include "auto_focus.h"
 
 #include <fcntl.h>
@@ -119,6 +121,8 @@ bool MIPI_Init(void){
 
 
 
+
+
 int main()
 {
 
@@ -139,7 +143,15 @@ int main()
 
 
   usleep(2000);
+  alt_u8* spi_dat = malloc(3);
 
+  while(1){
+	  spi_dat[0] = 0xFA;
+	  spi_dat[1] = 0x1C;
+	  spi_dat[2] = 0x34;
+	  int ret = 0;
+	  alt_avalon_spi_command(SPI_ARDUINO_BASE, 0, 3, spi_dat, 0, &ret, 0);
+  }
 
   // MIPI Init
    if (!MIPI_Init()){
@@ -201,6 +213,7 @@ int main()
         	while (1);
         }
 
+
   while(1){
 
        // touch KEY0 to trigger Auto focus
@@ -260,7 +273,9 @@ int main()
            if (word == EEE_IMGPROC_MSG_START)				//Newline on message identifier
     		   printf("\n");
     	   printf("%08x ",word);
+
        }
+
 
        //Update the bounding box colour
        boundingBoxColour = ((boundingBoxColour + 1) & 0xff);

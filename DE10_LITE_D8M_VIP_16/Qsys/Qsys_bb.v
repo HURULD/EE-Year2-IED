@@ -43,7 +43,11 @@ module Qsys (
 	terasic_camera_0_conduit_end_LVAL,
 	terasic_camera_0_conduit_end_PIXCLK,
 	uart_0_rx_tx_rxd,
-	uart_0_rx_tx_txd);	
+	uart_0_rx_tx_txd,
+	spi_external_MISO,
+	spi_external_MOSI,
+	spi_external_SCLK,
+	spi_external_SS_n);	
 
 	input		alt_vip_itc_0_clocked_video_vid_clk;
 	output	[23:0]	alt_vip_itc_0_clocked_video_vid_data;
@@ -89,4 +93,8 @@ module Qsys (
 	input		terasic_camera_0_conduit_end_PIXCLK;
 	input		uart_0_rx_tx_rxd;
 	output		uart_0_rx_tx_txd;
+	input		spi_external_MISO;
+	output		spi_external_MOSI;
+	output		spi_external_SCLK;
+	output		spi_external_SS_n;
 endmodule

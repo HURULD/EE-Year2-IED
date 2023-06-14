@@ -112,6 +112,7 @@ reg         MIPI_PIXEL_VS_d;
 reg         MIPI_PIXEL_HS_d;
 reg   [9:0] MIPI_PIXEL_D_d;
 
+
 assign MIPI_PIXEL_CLK_d = ~MIPI_PIXEL_CLK;
 
 always @ (posedge MIPI_PIXEL_CLK_d) begin
@@ -178,22 +179,31 @@ Qsys u0 (
 		
 		.eee_imgproc_0_conduit_mode_new_signal     (SW[0]),
 		
-		.uart_0_rx_tx_rxd                          (ARDUINO_IO[1]),                          //                     uart_0_rx_tx.rxd
-		.uart_0_rx_tx_txd                          (ARDUINO_IO[0])                           //
-	);
+		//.uart_0_rx_tx_rxd                          (ARDUINO_IO[0]),                          //                     uart_0_rx_tx.rxd
+		//.uart_0_rx_tx_txd                          (ARDUINO_IO[1])     		//
 
+		.spi_external_MISO (ARDUINO_IO[5]),                         //                     spi_external.MISO
+		.spi_external_MOSI (ARDUINO_IO[2]),                         //                                 .MOSI
+		.spi_external_SCLK (ARDUINO_IO[6]),                         //                                 .SCLK
+		.spi_external_SS_n (ARDUINO_IO[7]), 
+	);
+	
 FpsMonitor uFps(
 	.clk50(MAX10_CLK2_50),
 	.vs(MIPI_PIXEL_VS),
 	
 	.fps(),
-	.hex_fps_h(HEX1),
-	.hex_fps_l(HEX0)
+	.hex_fps_h(),
+	.hex_fps_l()
 );
 
-assign  HEX2 = 7'h7F;
-assign  HEX3 = 7'h7F;
-assign  HEX4 = 7'h7F;
-assign  HEX5 = 7'h7F;
+assign  HEX0 = 8'hFF;
+assign  HEX1 = 8'hFF;
+assign  HEX2 = 8'hFF;
+assign  HEX3 = 8'hFF;
+assign  HEX4 = 8'hFF;
+assign  HEX5 = 8'hFF;
+assign LEDR = 1;
+
 
 endmodule

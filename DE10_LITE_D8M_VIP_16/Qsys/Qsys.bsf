@@ -4,7 +4,7 @@ editor if you plan to continue editing the block that represents it in
 the Block Editor! File corruption is VERY likely to occur.
 */
 /*
-Copyright (C) 2016  Intel Corporation. All rights reserved.
+Copyright (C) 2018  Intel Corporation. All rights reserved.
 Your use of Intel Corporation's design tools, logic functions 
 and other software and tools, and its AMPP partner logic 
 functions, and any output files from any of the foregoing 
@@ -12,18 +12,17 @@ functions, and any output files from any of the foregoing
 associated documentation or information are expressly subject 
 to the terms and conditions of the Intel Program License 
 Subscription Agreement, the Intel Quartus Prime License Agreement,
-the Intel MegaCore Function License Agreement, or other 
-applicable license agreement, including, without limitation, 
-that your use is for the sole purpose of programming logic 
-devices manufactured by Intel and sold by Intel or its 
-authorized distributors.  Please refer to the applicable 
-agreement for further details.
+the Intel FPGA IP License Agreement, or other applicable license
+agreement, including, without limitation, that your use is for
+the sole purpose of programming logic devices manufactured by
+Intel and sold by Intel or its authorized distributors.  Please
+refer to the applicable agreement for further details.
 */
 (header "symbol" (version "1.1"))
 (symbol
-	(rect 0 0 576 1128)
+	(rect 0 0 576 1216)
 	(text "Qsys" (rect 273 -1 295 11)(font "Arial" (font_size 10)))
-	(text "inst" (rect 8 1112 20 1124)(font "Arial" ))
+	(text "inst" (rect 8 1200 20 1212)(font "Arial" ))
 	(port
 		(pt 0 72)
 		(input)
@@ -69,51 +68,58 @@ agreement for further details.
 	(port
 		(pt 0 880)
 		(input)
+		(text "spi_external_MISO" (rect 0 0 76 12)(font "Arial" (font_size 8)))
+		(text "spi_external_MISO" (rect 4 869 106 880)(font "Arial" (font_size 8)))
+		(line (pt 0 880)(pt 240 880)(line_width 1))
+	)
+	(port
+		(pt 0 968)
+		(input)
 		(text "sw_external_connection_export[9..0]" (rect 0 0 145 12)(font "Arial" (font_size 8)))
-		(text "sw_external_connection_export[9..0]" (rect 4 869 214 880)(font "Arial" (font_size 8)))
-		(line (pt 0 880)(pt 240 880)(line_width 3))
-	)
-	(port
-		(pt 0 936)
-		(input)
-		(text "terasic_auto_focus_0_conduit_clk50" (rect 0 0 146 12)(font "Arial" (font_size 8)))
-		(text "terasic_auto_focus_0_conduit_clk50" (rect 4 925 208 936)(font "Arial" (font_size 8)))
-		(line (pt 0 936)(pt 240 936)(line_width 1))
-	)
-	(port
-		(pt 0 992)
-		(input)
-		(text "terasic_camera_0_conduit_end_D[11..0]" (rect 0 0 161 12)(font "Arial" (font_size 8)))
-		(text "terasic_camera_0_conduit_end_D[11..0]" (rect 4 981 226 992)(font "Arial" (font_size 8)))
-		(line (pt 0 992)(pt 240 992)(line_width 3))
-	)
-	(port
-		(pt 0 1008)
-		(input)
-		(text "terasic_camera_0_conduit_end_FVAL" (rect 0 0 160 12)(font "Arial" (font_size 8)))
-		(text "terasic_camera_0_conduit_end_FVAL" (rect 4 997 202 1008)(font "Arial" (font_size 8)))
-		(line (pt 0 1008)(pt 240 1008)(line_width 1))
+		(text "sw_external_connection_export[9..0]" (rect 4 957 214 968)(font "Arial" (font_size 8)))
+		(line (pt 0 968)(pt 240 968)(line_width 3))
 	)
 	(port
 		(pt 0 1024)
 		(input)
-		(text "terasic_camera_0_conduit_end_LVAL" (rect 0 0 160 12)(font "Arial" (font_size 8)))
-		(text "terasic_camera_0_conduit_end_LVAL" (rect 4 1013 202 1024)(font "Arial" (font_size 8)))
+		(text "terasic_auto_focus_0_conduit_clk50" (rect 0 0 146 12)(font "Arial" (font_size 8)))
+		(text "terasic_auto_focus_0_conduit_clk50" (rect 4 1013 208 1024)(font "Arial" (font_size 8)))
 		(line (pt 0 1024)(pt 240 1024)(line_width 1))
-	)
-	(port
-		(pt 0 1040)
-		(input)
-		(text "terasic_camera_0_conduit_end_PIXCLK" (rect 0 0 166 12)(font "Arial" (font_size 8)))
-		(text "terasic_camera_0_conduit_end_PIXCLK" (rect 4 1029 214 1040)(font "Arial" (font_size 8)))
-		(line (pt 0 1040)(pt 240 1040)(line_width 1))
 	)
 	(port
 		(pt 0 1080)
 		(input)
+		(text "terasic_camera_0_conduit_end_D[11..0]" (rect 0 0 161 12)(font "Arial" (font_size 8)))
+		(text "terasic_camera_0_conduit_end_D[11..0]" (rect 4 1069 226 1080)(font "Arial" (font_size 8)))
+		(line (pt 0 1080)(pt 240 1080)(line_width 3))
+	)
+	(port
+		(pt 0 1096)
+		(input)
+		(text "terasic_camera_0_conduit_end_FVAL" (rect 0 0 160 12)(font "Arial" (font_size 8)))
+		(text "terasic_camera_0_conduit_end_FVAL" (rect 4 1085 202 1096)(font "Arial" (font_size 8)))
+		(line (pt 0 1096)(pt 240 1096)(line_width 1))
+	)
+	(port
+		(pt 0 1112)
+		(input)
+		(text "terasic_camera_0_conduit_end_LVAL" (rect 0 0 160 12)(font "Arial" (font_size 8)))
+		(text "terasic_camera_0_conduit_end_LVAL" (rect 4 1101 202 1112)(font "Arial" (font_size 8)))
+		(line (pt 0 1112)(pt 240 1112)(line_width 1))
+	)
+	(port
+		(pt 0 1128)
+		(input)
+		(text "terasic_camera_0_conduit_end_PIXCLK" (rect 0 0 166 12)(font "Arial" (font_size 8)))
+		(text "terasic_camera_0_conduit_end_PIXCLK" (rect 4 1117 214 1128)(font "Arial" (font_size 8)))
+		(line (pt 0 1128)(pt 240 1128)(line_width 1))
+	)
+	(port
+		(pt 0 1168)
+		(input)
 		(text "uart_0_rx_tx_rxd" (rect 0 0 71 12)(font "Arial" (font_size 8)))
-		(text "uart_0_rx_tx_rxd" (rect 4 1069 100 1080)(font "Arial" (font_size 8)))
-		(line (pt 0 1080)(pt 240 1080)(line_width 1))
+		(text "uart_0_rx_tx_rxd" (rect 4 1157 100 1168)(font "Arial" (font_size 8)))
+		(line (pt 0 1168)(pt 240 1168)(line_width 1))
 	)
 	(port
 		(pt 0 88)
@@ -277,11 +283,32 @@ agreement for further details.
 		(line (pt 0 840)(pt 240 840)(line_width 1))
 	)
 	(port
-		(pt 0 1096)
+		(pt 0 896)
+		(output)
+		(text "spi_external_MOSI" (rect 0 0 76 12)(font "Arial" (font_size 8)))
+		(text "spi_external_MOSI" (rect 4 885 106 896)(font "Arial" (font_size 8)))
+		(line (pt 0 896)(pt 240 896)(line_width 1))
+	)
+	(port
+		(pt 0 912)
+		(output)
+		(text "spi_external_SCLK" (rect 0 0 79 12)(font "Arial" (font_size 8)))
+		(text "spi_external_SCLK" (rect 4 901 106 912)(font "Arial" (font_size 8)))
+		(line (pt 0 912)(pt 240 912)(line_width 1))
+	)
+	(port
+		(pt 0 928)
+		(output)
+		(text "spi_external_SS_n" (rect 0 0 75 12)(font "Arial" (font_size 8)))
+		(text "spi_external_SS_n" (rect 4 917 106 928)(font "Arial" (font_size 8)))
+		(line (pt 0 928)(pt 240 928)(line_width 1))
+	)
+	(port
+		(pt 0 1184)
 		(output)
 		(text "uart_0_rx_tx_txd" (rect 0 0 70 12)(font "Arial" (font_size 8)))
-		(text "uart_0_rx_tx_txd" (rect 4 1085 100 1096)(font "Arial" (font_size 8)))
-		(line (pt 0 1096)(pt 240 1096)(line_width 1))
+		(text "uart_0_rx_tx_txd" (rect 4 1173 100 1184)(font "Arial" (font_size 8)))
+		(line (pt 0 1184)(pt 240 1184)(line_width 1))
 	)
 	(port
 		(pt 0 400)
@@ -319,18 +346,18 @@ agreement for further details.
 		(line (pt 0 792)(pt 240 792)(line_width 3))
 	)
 	(port
-		(pt 0 920)
+		(pt 0 1008)
 		(bidir)
 		(text "terasic_auto_focus_0_conduit_vcm_i2c_sda" (rect 0 0 181 12)(font "Arial" (font_size 8)))
-		(text "terasic_auto_focus_0_conduit_vcm_i2c_sda" (rect 4 909 244 920)(font "Arial" (font_size 8)))
-		(line (pt 0 920)(pt 240 920)(line_width 1))
+		(text "terasic_auto_focus_0_conduit_vcm_i2c_sda" (rect 4 997 244 1008)(font "Arial" (font_size 8)))
+		(line (pt 0 1008)(pt 240 1008)(line_width 1))
 	)
 	(port
-		(pt 0 952)
+		(pt 0 1040)
 		(bidir)
 		(text "terasic_auto_focus_0_conduit_vcm_i2c_scl" (rect 0 0 178 12)(font "Arial" (font_size 8)))
-		(text "terasic_auto_focus_0_conduit_vcm_i2c_scl" (rect 4 941 244 952)(font "Arial" (font_size 8)))
-		(line (pt 0 952)(pt 240 952)(line_width 1))
+		(text "terasic_auto_focus_0_conduit_vcm_i2c_scl" (rect 4 1029 244 1040)(font "Arial" (font_size 8)))
+		(line (pt 0 1040)(pt 240 1040)(line_width 1))
 	)
 	(drawing
 		(text "alt_vip_itc_0_clocked_video" (rect 78 43 318 99)(font "Arial" (color 128 0 0)(font_size 9)))
@@ -383,25 +410,30 @@ agreement for further details.
 		(text "dqm" (rect 245 803 508 1616)(font "Arial" (color 0 0 0)))
 		(text "ras_n" (rect 245 819 520 1648)(font "Arial" (color 0 0 0)))
 		(text "we_n" (rect 245 835 514 1680)(font "Arial" (color 0 0 0)))
-		(text "sw_external_connection" (rect 101 851 334 1715)(font "Arial" (color 128 0 0)(font_size 9)))
-		(text "export" (rect 245 875 526 1760)(font "Arial" (color 0 0 0)))
-		(text "terasic_auto_focus_0_conduit" (rect 65 891 298 1795)(font "Arial" (color 128 0 0)(font_size 9)))
-		(text "vcm_i2c_sda" (rect 245 915 556 1840)(font "Arial" (color 0 0 0)))
-		(text "clk50" (rect 245 931 520 1872)(font "Arial" (color 0 0 0)))
-		(text "vcm_i2c_scl" (rect 245 947 556 1904)(font "Arial" (color 0 0 0)))
-		(text "terasic_camera_0_conduit_end" (rect 58 963 284 1939)(font "Arial" (color 128 0 0)(font_size 9)))
-		(text "D" (rect 245 987 496 1984)(font "Arial" (color 0 0 0)))
-		(text "FVAL" (rect 245 1003 514 2016)(font "Arial" (color 0 0 0)))
-		(text "LVAL" (rect 245 1019 514 2048)(font "Arial" (color 0 0 0)))
-		(text "PIXCLK" (rect 245 1035 526 2080)(font "Arial" (color 0 0 0)))
-		(text "uart_0_rx_tx" (rect 166 1051 404 2115)(font "Arial" (color 128 0 0)(font_size 9)))
-		(text "rxd" (rect 245 1075 508 2160)(font "Arial" (color 0 0 0)))
-		(text "txd" (rect 245 1091 508 2192)(font "Arial" (color 0 0 0)))
-		(text " Qsys " (rect 550 1112 1136 2234)(font "Arial" ))
+		(text "spi_external" (rect 170 851 412 1715)(font "Arial" (color 128 0 0)(font_size 9)))
+		(text "MISO" (rect 245 875 514 1760)(font "Arial" (color 0 0 0)))
+		(text "MOSI" (rect 245 891 514 1792)(font "Arial" (color 0 0 0)))
+		(text "SCLK" (rect 245 907 514 1824)(font "Arial" (color 0 0 0)))
+		(text "SS_n" (rect 245 923 514 1856)(font "Arial" (color 0 0 0)))
+		(text "sw_external_connection" (rect 101 939 334 1891)(font "Arial" (color 128 0 0)(font_size 9)))
+		(text "export" (rect 245 963 526 1936)(font "Arial" (color 0 0 0)))
+		(text "terasic_auto_focus_0_conduit" (rect 65 979 298 1971)(font "Arial" (color 128 0 0)(font_size 9)))
+		(text "vcm_i2c_sda" (rect 245 1003 556 2016)(font "Arial" (color 0 0 0)))
+		(text "clk50" (rect 245 1019 520 2048)(font "Arial" (color 0 0 0)))
+		(text "vcm_i2c_scl" (rect 245 1035 556 2080)(font "Arial" (color 0 0 0)))
+		(text "terasic_camera_0_conduit_end" (rect 58 1051 284 2115)(font "Arial" (color 128 0 0)(font_size 9)))
+		(text "D" (rect 245 1075 496 2160)(font "Arial" (color 0 0 0)))
+		(text "FVAL" (rect 245 1091 514 2192)(font "Arial" (color 0 0 0)))
+		(text "LVAL" (rect 245 1107 514 2224)(font "Arial" (color 0 0 0)))
+		(text "PIXCLK" (rect 245 1123 526 2256)(font "Arial" (color 0 0 0)))
+		(text "uart_0_rx_tx" (rect 166 1139 404 2291)(font "Arial" (color 128 0 0)(font_size 9)))
+		(text "rxd" (rect 245 1163 508 2336)(font "Arial" (color 0 0 0)))
+		(text "txd" (rect 245 1179 508 2368)(font "Arial" (color 0 0 0)))
+		(text " Qsys " (rect 550 1200 1136 2410)(font "Arial" ))
 		(line (pt 240 32)(pt 336 32)(line_width 1))
-		(line (pt 336 32)(pt 336 1112)(line_width 1))
-		(line (pt 240 1112)(pt 336 1112)(line_width 1))
-		(line (pt 240 32)(pt 240 1112)(line_width 1))
+		(line (pt 336 32)(pt 336 1200)(line_width 1))
+		(line (pt 240 1200)(pt 336 1200)(line_width 1))
+		(line (pt 240 32)(pt 240 1200)(line_width 1))
 		(line (pt 241 52)(pt 241 204)(line_width 1))
 		(line (pt 242 52)(pt 242 204)(line_width 1))
 		(line (pt 241 220)(pt 241 244)(line_width 1))
@@ -434,17 +466,19 @@ agreement for further details.
 		(line (pt 242 652)(pt 242 676)(line_width 1))
 		(line (pt 241 692)(pt 241 844)(line_width 1))
 		(line (pt 242 692)(pt 242 844)(line_width 1))
-		(line (pt 241 860)(pt 241 884)(line_width 1))
-		(line (pt 242 860)(pt 242 884)(line_width 1))
-		(line (pt 241 900)(pt 241 956)(line_width 1))
-		(line (pt 242 900)(pt 242 956)(line_width 1))
-		(line (pt 241 972)(pt 241 1044)(line_width 1))
-		(line (pt 242 972)(pt 242 1044)(line_width 1))
-		(line (pt 241 1060)(pt 241 1100)(line_width 1))
-		(line (pt 242 1060)(pt 242 1100)(line_width 1))
+		(line (pt 241 860)(pt 241 932)(line_width 1))
+		(line (pt 242 860)(pt 242 932)(line_width 1))
+		(line (pt 241 948)(pt 241 972)(line_width 1))
+		(line (pt 242 948)(pt 242 972)(line_width 1))
+		(line (pt 241 988)(pt 241 1044)(line_width 1))
+		(line (pt 242 988)(pt 242 1044)(line_width 1))
+		(line (pt 241 1060)(pt 241 1132)(line_width 1))
+		(line (pt 242 1060)(pt 242 1132)(line_width 1))
+		(line (pt 241 1148)(pt 241 1188)(line_width 1))
+		(line (pt 242 1148)(pt 242 1188)(line_width 1))
 		(line (pt 0 0)(pt 576 0)(line_width 1))
-		(line (pt 576 0)(pt 576 1128)(line_width 1))
-		(line (pt 0 1128)(pt 576 1128)(line_width 1))
-		(line (pt 0 0)(pt 0 1128)(line_width 1))
+		(line (pt 576 0)(pt 576 1216)(line_width 1))
+		(line (pt 0 1216)(pt 576 1216)(line_width 1))
+		(line (pt 0 0)(pt 0 1216)(line_width 1))
 	)
 )

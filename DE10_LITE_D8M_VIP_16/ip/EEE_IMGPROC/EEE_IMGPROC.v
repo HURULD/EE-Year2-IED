@@ -70,33 +70,87 @@ parameter MSG_INTERVAL = 6;
 parameter BB_COL_DEFAULT = 24'h00ff00;
 
 
-wire [7:0]   red, green, blue, grey;
+wire [7:0]   red, green, blue, grey, black;
 wire [7:0]   red_out, green_out, blue_out;
+
+wire [7:0] hue, sat, val;
+wire [7:0] r_norm, g_norm, b_norm;
+
+wire [7:0] max_val;
+wire [7:0] min_val;
+wire [7:0] delta;
 
 wire         sop, eop, in_valid, out_ready;
 ////////////////////////////////////////////////////////////////////////
 
-// Detect red areas
+
+// Convert RGB values to range [0, 1]
+assign r_norm = red[7:0];
+assign g_norm = green[7:0];
+assign b_norm = blue[7:0];
+
+// Calculate the maximum and minimum values among R, G, and B
+assign max_val = (r_norm > g_norm) ? ((r_norm > b_norm) ? r_norm : b_norm) : ((g_norm > b_norm) ? g_norm : b_norm);
+assign min_val = (r_norm < g_norm) ? ((r_norm < b_norm) ? r_norm : b_norm) : ((g_norm < b_norm) ? g_norm : b_norm);
+assign delta = max_val - min_val;
+
+// Calculate value (V)
+assign val = max_val;
+
+// Calculate saturation (S)
+assign sat = (max_val != 0) ? (delta / max_val) : 0;
+
+// Calculate hue (H)
+
+assign hue = (delta == 0) ? 0 : ((max_val == r_norm) ? ((g_norm - b_norm) / delta) * 60 : ((max_val == g_norm) ? (((b_norm - r_norm) / delta) + 2) * 60 : (((r_norm - g_norm) / delta) + 4) * 60));
+
+// Detect red, blue or orange areas
+
 wire red_detect;
-assign red_detect = red[7] & ~green[7] & ~blue[7];
+wire blue_detect;
+wire orange_detect;
+wire white_detect;
+ 
+//assign red_detect = (red[7:5] == 3'b111) & ~green[7] & ~blue[7];
+//assign blue_detect = ~red[7] & ~green[7] & (blue[7:6] == 2'b11);
+//assign orange_detect = (red[7:5] == 3'b111) & green[7] & (green[7:0] <= 8'b11001100) & ~blue[7];
+//assign white_detect = (red[7:0] == 8'hff) & (green[7:0] == 8'hff) & (blue[7:0] == 8'hff);
+
+assign red_detect = ((hue >= 8'd230) || (hue <= 8'd15)) && (sat >= 8'd5) && (val >= 8'd5);
+assign blue_detect = (hue == 8'd170) && (sat >= 8'd10) && (val == 8'd10);
+assign orange_detect = (hue == 8'd30) && (sat == 8'd255) && (val == 8'd10);
+assign white_detect = (hue == 8'd0) && (sat == 8'd0) && (val == 8'd255);
 
 // Find boundary of cursor box
 
+
 // Highlight detected areas
 wire [23:0] red_high;
-assign grey = green[7:1] + red[7:2] + blue[7:2]; //Grey = green/2 + red/4 + blue/4
-assign red_high  =  red_detect ? {8'hff, 8'h0, 8'h0} : {grey, grey, grey};
+wire [23:0] blue_high;
+wire [23:0] orange_high;
+wire [23:0] white_high;
 
-// Show bounding box
+assign grey = green[7:1] + red[7:2] + blue[7:2]; //Grey = green/2 + red/4 + blue/4
+assign black = 8'h00;
+assign red_high = red_detect ? {8'hff, 8'h0, 8'h0} : {black, black, black};
+assign blue_high = blue_detect ? {8'h0, 8'h0, 8'hff} : {black, black, black};
+assign orange_high = orange_detect ? {8'hff, 8'hA5, 8'h0} : {black, black, black};
+assign white_high = white_detect ? {8'hff, 8'hff, 8'hff} : {black, black, black};
+
+//&& (y >= 11'd180)
+
+// Show bounding box	
 wire [23:0] new_image;
-wire bb_active;
-assign bb_active = (x == left) | (x == right) | (y == top) | (y == bottom);
-assign new_image = bb_active ? bb_col : red_high;
+wire bb_active_red, bb_active_blue,bb_active_orange;
+//assign bb_active_red = (x == left) | (x == right) | (y == top) | (y == bottom);
+//assign bb_active_blue = (x == left) | (x == right) | (y == top) | (y == bottom);
+//assign bb_active_orange = (x == left) | (x == right) | (y == top) | (y == bottom);
+assign new_image = bb_active_red ? bb_col : (bb_active_blue ? bb_col : (bb_active_orange ? bb_col : (red_high | blue_high | orange_high| white_high)));
 
 // Switch output pixels depending on mode switch
 // Don't modify the start-of-packet word - it's a packet discriptor
 // Don't modify data in non-video packets
-assign {red_out, green_out, blue_out} = (mode & ~sop & packet_video) ? new_image : {red,green,blue};
+assign {red_out, green_out, blue_out} = (mode & ~sop & packet_video) ? new_image : {red, green, blue};
 
 //Count valid pixels to tget the image coordinates. Reset and detect packet type on Start of Packet.
 reg [10:0] x, y;
@@ -107,7 +161,7 @@ always@(posedge clk) begin
 		y <= 11'h0;
 		packet_video <= (blue[3:0] == 3'h0);
 	end
-	else if (in_valid) begin
+	else if (in_valid) begin  
 		if (x == IMAGE_W-1) begin
 			x <= 11'h0;
 			y <= y + 11'h1;
@@ -118,21 +172,34 @@ always@(posedge clk) begin
 	end
 end
 
-//Find first and last red pixels
+//Find first and last red, blue or orange pixels
 reg [10:0] x_min, y_min, x_max, y_max;
-always@(posedge clk) begin
-	if (red_detect & in_valid) begin	//Update bounds when the pixel is red
-		if (x < x_min) x_min <= x;
-		if (x > x_max) x_max <= x;
-		if (y < y_min) y_min <= y;
-		y_max <= y;
-	end
-	if (sop & in_valid) begin	//Reset bounds on start of packet
-		x_min <= IMAGE_W-11'h1;
-		x_max <= 0;
-		y_min <= IMAGE_H-11'h1;
-		y_max <= 0;
-	end
+
+always @(posedge clk) begin
+  if (red_detect & in_valid) begin  // Update bounds when the pixel is red
+    if (x < x_min) x_min <= x;
+    if (x > x_max) x_max <= x;
+    if (y < y_min) y_min <= y;
+    y_max <= y;
+  end
+  if (blue_detect & in_valid) begin  // Update bounds when the pixel is blue
+    if (x < x_min) x_min <= x;
+    if (x > x_max) x_max <= x;
+    if (y < y_min) y_min <= y;
+    y_max <= y;
+  end
+  if (orange_detect & in_valid) begin  // Update bounds when the pixel is orange
+    if (x < x_min) x_min <= x;
+    if (x > x_max) x_max <= x;
+    if (y < y_min) y_min <= y;
+    y_max <= y;
+  end
+  if (sop & in_valid) begin  // Reset bounds on the start of a packet
+    x_min <= IMAGE_W - 11'h1;
+    x_max <= 0;
+    y_min <= IMAGE_H - 11'h1;
+    y_max <= 0;
+  end
 end
 
 //Process bounding box at the end of the frame.
@@ -144,9 +211,9 @@ always@(posedge clk) begin
 		
 		//Latch edges for display overlay on next frame
 		left <= x_min;
-		right <= x_max;
-		top <= y_min;
-		bottom <= y_max;
+      right <= x_max;
+      top <= y_min;
+      bottom <= y_max;
 		
 		
 		//Start message writer FSM once every MSG_INTERVAL frames, if there is room in the FIFO
@@ -302,4 +369,3 @@ assign msg_buf_rd = s_chipselect & s_read & ~read_d & ~msg_buf_empty & (s_addres
 
 
 endmodule
-

@@ -43,7 +43,11 @@
 			terasic_camera_0_conduit_end_LVAL         : in    std_logic                     := 'X';             -- LVAL
 			terasic_camera_0_conduit_end_PIXCLK       : in    std_logic                     := 'X';             -- PIXCLK
 			uart_0_rx_tx_rxd                          : in    std_logic                     := 'X';             -- rxd
-			uart_0_rx_tx_txd                          : out   std_logic                                         -- txd
+			uart_0_rx_tx_txd                          : out   std_logic;                                        -- txd
+			spi_external_MISO                         : in    std_logic                     := 'X';             -- MISO
+			spi_external_MOSI                         : out   std_logic;                                        -- MOSI
+			spi_external_SCLK                         : out   std_logic;                                        -- SCLK
+			spi_external_SS_n                         : out   std_logic                                         -- SS_n
 		);
 	end component Qsys;
 
@@ -92,6 +96,10 @@
 			terasic_camera_0_conduit_end_LVAL         => CONNECTED_TO_terasic_camera_0_conduit_end_LVAL,         --                                 .LVAL
 			terasic_camera_0_conduit_end_PIXCLK       => CONNECTED_TO_terasic_camera_0_conduit_end_PIXCLK,       --                                 .PIXCLK
 			uart_0_rx_tx_rxd                          => CONNECTED_TO_uart_0_rx_tx_rxd,                          --                     uart_0_rx_tx.rxd
-			uart_0_rx_tx_txd                          => CONNECTED_TO_uart_0_rx_tx_txd                           --                                 .txd
+			uart_0_rx_tx_txd                          => CONNECTED_TO_uart_0_rx_tx_txd,                          --                                 .txd
+			spi_external_MISO                         => CONNECTED_TO_spi_external_MISO,                         --                     spi_external.MISO
+			spi_external_MOSI                         => CONNECTED_TO_spi_external_MOSI,                         --                                 .MOSI
+			spi_external_SCLK                         => CONNECTED_TO_spi_external_SCLK,                         --                                 .SCLK
+			spi_external_SS_n                         => CONNECTED_TO_spi_external_SS_n                          --                                 .SS_n
 		);
 
